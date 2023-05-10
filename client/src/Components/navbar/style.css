@@ -1,0 +1,28 @@
+.menuCloseIcon {
+    text-align: right;
+}
+
+.ant-menu-item:hover {
+    background-color: rgb(188, 244, 252);
+}
+
+:where(.css-dev-only-do-not-override-1km3mtt).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover {
+    background-color: rgb(188, 244, 252);
+}
+
+.drawer{
+    text-align :      right;
+    padding         :      0px,
+}
+
+@media (max-width:1000px) {
+    .header {
+        display: none;
+    }
+}
+
+@media (min-width:1000px) {
+    .menuCloseIcon {
+        display: none;
+    }
+}

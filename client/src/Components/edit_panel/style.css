@@ -1,0 +1,10 @@
+.edit-panel{
+    display: flex;
+    
+    justify-content: center; 
+    align-items: flex-start;  
+}
+
+.tabs{
+    width: 100%;
+}

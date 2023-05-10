@@ -1,0 +1,30 @@
+.content{
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.main{
+    height: 100%;
+}
+
+.nav{
+    width: 100%;
+}
+
+@media (max-height: 960px) {
+    .content{
+        height: 600px;
+    }
+}
+
+@media (min-height: 961px) and (max-height: 1000px) {
+    .content{
+        height: 750px;
+    }
+}
+
+@media (min-height: 1001px) {
+    .content{
+        height: 1000px;
+    }
+}

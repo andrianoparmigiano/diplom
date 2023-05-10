@@ -1,0 +1,8 @@
+.ant-checkbox-group{
+    display: flex !important;
+    flex-wrap: wrap;
+    align-content: space-between !important;
+    align-items: baseline;
+    flex-direction: column;
+    margin-bottom: 15px;
+}

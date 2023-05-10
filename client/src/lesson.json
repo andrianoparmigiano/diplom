@@ -1,0 +1,27 @@
+[
+    {
+        "lesson" :      "robo",
+        "timing" :      "20:00",
+        "day"    :      "СР"
+    },
+    {
+        "lesson" :      "oop",
+        "timing" :      "20:00",
+        "day"    :      "СР"
+    },
+    {
+        "lesson" :      "robo",
+        "timing" :      "20:00",
+        "day"    :      "ПТ"
+    },
+    {
+        "lesson" :      "prog",
+        "timing" :      "20:00",
+        "day"    :      "СР"
+    },
+    {
+        "lesson" :      "les2",
+        "timing" :      "20:00",
+        "day"    :      "СР"
+    }
+]

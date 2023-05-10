@@ -1,0 +1,92 @@
+[
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "ad ad ad",
+        "email": "1@1.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "admin"
+    },
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "andrew sh",
+        "email": "2@2.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "user",
+        "children": [
+            {
+                "name": "a1",
+                "lesson": ["robo","prog"]
+            },
+            {
+                "name": "a2",
+                "lesson": ["robo","prog"]
+            },
+            {
+                "name": "a3",
+                "lesson": ["robo","prog"]
+            }
+        ]
+    },
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "ivan ivan",
+        "email": "5@5.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "user",
+        "children": [
+            {
+                "name": "b1",
+                "lesson": ["les2","prog"]
+            },
+            {
+                "name": "b2",
+                "lesson": ["robo","prog"]
+            }
+        ]
+    },
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "a a a",
+        "email": "6@6.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "user",
+        "children": [
+            {
+                "name": "c1",
+                "lesson": ["robo"]
+            }
+        ]
+    },
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "ivan ivan",
+        "email": "7@7.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "teacher"
+    },
+    {
+        "_id": "6444f86efa94ef15cfce959e",
+        "fullName": "lexa lexa",
+        "email": "8@8.ru",
+        "password": "$2b$04$xC.kwXLX9DvXj.sLWk8yUu2pkxm8kys7g7JfBrliU.K78ptVpBPoO",
+        "isActivated": false,
+        "activationLink": "55c0a50f-69e3-45f2-a16d-6f0bb728094e",
+        "role": "teacher",
+        "children": [
+            {
+                "name": "d1",
+                "lesson": ["oop"]
+            }
+        ]
+    }
+]
