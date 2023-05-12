@@ -5,41 +5,14 @@
     /* box-shadow: 6px 3px 32px 13px #bdbdbd inset; */
     /* overflow-y: auto; */
     /* height: fit-content; */
-    min-height: 100%;
-    display: flex;
+    /* min-height: 100%; */
+    /* display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
-}
-
-.selectchildrenlesson{
-    /* width: 100%; */
-    margin-bottom: 10px;
-    position: fixed;
-    width: 50%;
-    z-index: 10;
-}
-
-.inp_and_title{
-    background: #ffffff;
-    width: 100%;
-    position: fixed;
-    bottom: 10px;
-    z-index: 10;
-}
-
-.inp_space{
-    width: 90%;
-}
-
-.lesson{
-    text-align: center;
-    font-weight: 1000;
-}
-
-.mes{
+    justify-content: flex-start; */
+    overflow: auto;
     flex-grow:1;
-    max-height: 100%;
+    max-height: 500px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-start; 
@@ -49,6 +22,30 @@
     padding: 10px;
     gap: 5px;
     margin-bottom: 20px;
+}
+
+.selectchildrenlesson{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.inp_and_title{
+    background: #ffffff;
+    width: 100%;
+    z-index: 10;
+}
+
+.inp_space{
+    width: 100%;
+}
+
+.lesson{
+    text-align: center;
+    font-weight: 1000;
+}
+
+.mes{
+    
 }
 
 .message{

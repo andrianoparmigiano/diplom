@@ -6,7 +6,7 @@ import { Button, Card, Input, Select, Space, TreeSelect } from "antd";
 import { DeleteOutlined, SendOutlined } from "@ant-design/icons";
 import io from "socket.io-client"
 
-const socket = io.connect("http://localhost:8000")
+// const socket = io.connect("http://localhost:8000")
 
 const Chat = () => {
     const storage = new Storage();
@@ -32,12 +32,12 @@ const Chat = () => {
             console.log(storage.data.user.children);
             storage.setData('children', storage.data.user.children)
         }
-    })
+    }, [storage.data.user])
 
     const [room, setRoom] = useState("none");
 
     const sendmessage = () => {
-        socket.emit()
+        // socket.emit()
     };
 
     const deleteMessage = () => {};
@@ -59,49 +59,114 @@ const Chat = () => {
             storage.setData('messages', data)
         })
         .catch((err) => console.log(err));
-        socket.on('join', )
+        // socket.on('join', )
     };
 
     let a = new Date(Date.now());
 
     return (storage.data.user === "unauth" || 
-        <div className="chat">
-            {<Select
-                defaultValue="none"
-                className="selectchildrenlesson"
-                onChange={onChangeChild}
-                options={storage.data.children ? 
-                    [...storage.data.children.map(el => ({
-                        label: el.name,
-                        options: el.lessons.map(les => ({
-                            value: `${les}-${el._id}`,
-                            label: les,
-                        }))
-                    })).filter(el => el.options.length !== 0)
-                    , {value: "none", label: "Select the lesson chat"}] : []
+    <>{<Select
+        defaultValue="none"
+        className="selectchildrenlesson"
+        onChange={onChangeChild}
+        options={storage.data.children ? 
+            [...storage.data.children.map(el => ({
+                label: el.name,
+                options: el.lessons.map(les => ({
+                    value: `${les}-${el._id}`,
+                    label: les,
+                }))
+            })).filter(el => el.options.length !== 0)
+            , {value: "none", label: "Select the lesson chat"}] : []
+        }
+    />}
+        {room === "none" || <div className="chat">
+                {/*  <div className="mes"> */}
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                    <Card hoverable className="message">
+                        <div className="id">24359082736-</div>
+                        <div className="name">aaa</div>
+                        <div className="text">
+                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                        </div>
+                        <div className="time">{a.toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                    </Card>
+                </div>
                 }
-            />}
-            {room === "none" || <><div className="mes">
-                <Card hoverable className="message">
-                    <div className="id">24359082736-</div>
-                    <div className="name">aaa</div>
-                    <div className="text">
-                        erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                    </div>
-                    <div className="time">{a.toLocaleString("ru")}</div>
-                    <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                </Card>
-            </div>
-            <div className="inp_and_title">
-                <Space.Compact className="inp_space">
-                    <Input />
-                    <Button type="primary" onClick={sendmessage}>
-                        <SendOutlined />
-                    </Button>
-                </Space.Compact>
-                <div className="lesson">{room.split('-')[0]}</div>
-            </div></>}
-        </div>
+        {/* </div> */}
+        {room === "none" || <div className="inp_and_title">
+            <Space.Compact className="inp_space">
+                <Input />
+                <Button type="primary" onClick={sendmessage}>
+                    <SendOutlined />
+                </Button>
+            </Space.Compact>
+            <div className="lesson">{room.split('-')[0]}</div>
+        </div>}
+    </>
     );
 };
 
