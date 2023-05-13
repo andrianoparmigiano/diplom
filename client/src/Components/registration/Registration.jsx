@@ -46,7 +46,6 @@ const Registration = () => {
                     alert("Непредвиденная ошибка");
                     return;
                 }
-                localStorage.setItem('user', data.user.role)
                 storage.setData('user', data.user)
                 navigate("/");
                 storage.setData("location", window.location.pathname);

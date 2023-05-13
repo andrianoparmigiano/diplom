@@ -12,9 +12,13 @@ import Home from "./Components/home/Home";
 import Schedule from "./Components/schedule/Schedule";
 
 function App() {
+    const storage = new Storage();
     useEffect(() => {
-        const storage = new Storage();
         storage.setData("location", window.location.pathname);
+        storage.setData("user", "unauth");
+        storage.setData("users", []);
+
+        // проверить авторизацию и получить данные о пользователе
         fetch(`http://localhost:8000/checkauth`, {
             method: "GET",
             credentials: "include",
@@ -23,19 +27,34 @@ function App() {
                 "Content-Type": "application/json;charset=UTF-8",
             },
         })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                if (data.message === "Пользователь не авторизован!") {
-                    storage.setData("user", "unauth");
-                    localStorage.setItem("user", "unauth");
-                    return;
-                }
-                localStorage.setItem("user", data);
-                storage.setData("user", data);
-            })
-            .catch((err) => console.log(err))
-        // if(localStorage.getItem('token')) storage.setData('auth', true)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            if (data.message === "Пользователь не авторизован!") {
+                storage.setData("user", "unauth");
+                return;
+            }
+            storage.setData("user", data);
+
+            // получить всех пользователей для редактирования
+            if(storage.data.user?.role === "admin"){
+                fetch(`http://localhost:8000/getusers`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    storage.setData("users", data);
+                })
+                .catch((err) => console.log(err))
+            }
+        })
+        .catch((err) => console.log(err))
     }, []);
 
     return (

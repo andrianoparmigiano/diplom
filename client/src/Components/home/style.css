@@ -6,3 +6,41 @@
     flex-direction: column;
     margin-bottom: 15px;
 }
+
+.setlesson{
+    display: flex;
+    
+    justify-content: flex-start; 
+    justify-content: space-between;  
+    flex-direction: column;  
+}
+
+.les-scroll{
+    display: flex;
+    
+    justify-content: flex-start; 
+    justify-content: space-between;  
+    flex-direction: column;
+
+    max-height: 550px;
+    overflow: auto;
+}
+
+.setlesson>*, .les-scroll>*:not(:last-child){
+    margin-bottom: 10px;
+}
+
+.les{
+    display: flex;
+    
+    justify-content: space-between;
+}
+
+.icon-minus{
+    vertical-align:middle;
+    text-align: center;
+}
+
+.input-les{
+    width: calc(100% - 20px);
+}

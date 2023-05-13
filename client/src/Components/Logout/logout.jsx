@@ -23,8 +23,6 @@ const Logout = () => {
                 alert("Непредвиденная ошибка")
                 return
             }
-            // localStorage.removeItem('token')
-            localStorage.setItem('user', 'unauth')
             storage.setData('user', "unauth")
             navigate('/')
             storage.setData('location', window.location.pathname)

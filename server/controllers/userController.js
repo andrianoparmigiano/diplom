@@ -39,6 +39,15 @@ class AuthController{
         }
     }
 
+    async getusers(req, res, next){
+        try {
+            const users = await userModel.find({role: "user"})
+            res.json(users)
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async getchildren(req, res, next){
         try {
             const user = await userModel.find({})

@@ -33,8 +33,6 @@ const Login = () => {
                 alert("Непредвиденная ошибка")
                 return
             }
-            // localStorage.setItem('token', data.refreshToken)
-            localStorage.setItem('user', data.user.role)
             storage.setData('user', data.user)
             navigate("/")
             storage.setData('location', window.location.pathname)

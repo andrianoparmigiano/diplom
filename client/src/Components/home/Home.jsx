@@ -111,49 +111,37 @@ const Home = () => {
                 </div>
             ) : (
                 <div className="setlesson">
-                    {storage.data?.lessons &&
+                    <div className="les-scroll">{storage.data?.lessons &&
                         storage.data.lessons.map((lesson, i) => (
                             <div className="les" key={i}>
-                                <Form.Item
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Missing lesson",
-                                        },
-                                    ]}
-                                >
-                                    <Input
-                                        placeholder="lesson"
-                                        value={lesson}
-                                        onChange={(e) => {
-                                            storage.setData("lessons", [
-                                                ...storage.data.lessons.slice(0,i),
-                                                e.target.value,
-                                                ...storage.data.lessons.slice(i + 1),
-                                            ]);
-                                        }}
-                                    />
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                    onClick={() => remove(i)}
+                                <Input
+                                    placeholder="lesson"
+                                    value={lesson}
+                                    className="input-les"
+                                    onChange={(e) => {
+                                        storage.setData("lessons", [
+                                            ...storage.data.lessons.slice(0,i),
+                                            e.target.value,
+                                            ...storage.data.lessons.slice(i + 1),
+                                        ]);
+                                    }}
                                 />
+                                <div className="icon-minus"><MinusCircleOutlined
+                                    onClick={() => remove(i)}
+                                /></div>
                             </div>
-                        ))}
-                    <Form.Item>
-                        <Button
-                            type="dashed"
-                            onClick={() => add()}
-                            block
-                            icon={<PlusOutlined />}
-                        >
-                            Add field
-                        </Button>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" onClick={setlessons}>
-                            Submit
-                        </Button>
-                    </Form.Item>
+                        ))}</div>
+                    <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                    >
+                        Add field
+                    </Button>
+                    <Button type="primary" onClick={setlessons}>
+                        Submit
+                    </Button>
                 </div>
             )}
         </div>

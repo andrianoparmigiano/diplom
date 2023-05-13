@@ -9,7 +9,7 @@ const Schedule = () => {
             <Button
                 onClick={() => {
                     console.log(storage.data);
-                    fetch("http://localhost:8000/checkauth", {
+                    fetch("http://localhost:8000/getusers", {
                         credentials: "include",
                         method: "GET",
                         headers: {

@@ -60,7 +60,7 @@ const Navbar = () => {
                 mode="inline"
                 // theme="dark"
                 // inlineCollapsed={collapsed}
-                items={menu[storage.data.user ? storage.data.user === "unauth" ? "unauth" : storage.data.user.role : localStorage.getItem("user") || "unauth"]}
+                items={menu[storage.data.user ? storage.data.user === "unauth" ? "unauth" : storage.data.user.role : "unauth"]}
             />
         </div>
     );
