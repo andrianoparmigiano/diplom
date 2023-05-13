@@ -26,7 +26,7 @@ const Home = () => {
                     storage.setData("lessons", data);
             })
             .catch((err) => console.log(err));
-    }, []);
+    }, [storage.data.user]);
 
     const add = () => {
         storage.setData("lessons", [...storage.data.lessons, ""]);
@@ -52,7 +52,6 @@ const Home = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                storage.setData("user", data);
             })
             .catch((err) => console.log(err));
     };

@@ -12,8 +12,9 @@ router.get('/checkauth', authMiddleware, AuthController.checkauth)
 router.post('/setlessons', authMiddleware, AuthController.setlessons)
 router.get('/getlessons', authMiddleware, AuthController.getlessons)
 router.post('/setchildsles', authMiddleware, AuthController.setchildsles)
-router.get('/getchildren', authMiddleware, AuthController.getchildren)
+// router.get('/getchildren', authMiddleware, AuthController.getchildren)
 router.get('/getusers', authMiddleware, AuthController.getusers)
+router.get('/getmessages', authMiddleware, AuthController.getmessages)
 // router.get('/checkAuth', authMiddleware, AuthController.checkAuth)
 
 export default router

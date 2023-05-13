@@ -41,19 +41,19 @@ class AuthController{
 
     async getusers(req, res, next){
         try {
-            const users = await userModel.find({role: "user"})
+            let users = await userModel.find({role: "user"}).populate("children")
+            users = users.map((user) => new UserDto(user))
             res.json(users)
         } catch (err) {
             next(err);
         }
     }
 
-    async getchildren(req, res, next){
+    async getmessages(req, res, next){
         try {
-            const user = await userModel.find({})
-            let children = []
-            user.map(el => children.push(...el.children))
-            res.json(children)
+            let users = await userModel.find({role: "user"}).populate("children")
+            users = users.map((user) => new UserDto(user))
+            res.json(users)
         } catch (err) {
             next(err);
         }
@@ -67,6 +67,8 @@ class AuthController{
                 let el = await lessonModel.create({name: lesson})
                 lessons.push(el.name)
             }
+            let children = await childrenModel.find({})
+            children = children.map((child) => ({...child, lessons: child.lessons.filter((les) => lessons.includes(les))}))
             res.json(lessons)
         } catch (err) {
             next(err);
@@ -75,14 +77,17 @@ class AuthController{
 
     async setchildsles(req, res, next){
         try {
-            // const child = await childrenModel.findById(child_id)
+            const child = await childrenModel.findById(req.body._id)
+            console.log(child);
+            child.lessons = req.body.lessons
+            await child.save()
             console.log(req.body);
-            const user = await userModel.findById(req.body.user_id)
-            const child_index = user.children.findIndex(el => el._id.toString() === req.body._id)
-            user.children = [...user.children.slice(0, child_index), {...user.children[child_index], lessons: req.body.lessons}, ...user.children.slice(child_index + 1)]
-            await user.save()
-            const userDto = new UserDto(user)
-            res.json(userDto)
+            // const user = await userModel.findById(req.body.user_id)
+            // const child_index = user.children.findIndex(el => el._id.toString() === req.body._id)
+            // user.children = [...user.children.slice(0, child_index), {...user.children[child_index], lessons: req.body.lessons}, ...user.children.slice(child_index + 1)]
+            // await user.save()
+            // const userDto = new UserDto(user)
+            res.json(child)
         } catch (err) {
             next(err);
         }
@@ -101,7 +106,7 @@ class AuthController{
         try {
             const { refreshToken } = req.cookies;
             const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-            const condidate = await userModel.findOne({email: userData.email});
+            const condidate = await userModel.findOne({email: userData.email}).populate("children");
             const userDto = new UserDto(condidate);
             res.json(userDto);
         } catch (err) {

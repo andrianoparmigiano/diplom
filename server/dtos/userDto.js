@@ -8,7 +8,7 @@ export default class UserDto{
 
     constructor(model){
         this.email=model.email
-        this.id=model._id
+        this._id=model._id
         this.isActivated=model.isActivated
         this.fullName=model.fullName
         this.role=model.role

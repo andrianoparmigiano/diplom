@@ -6,7 +6,7 @@ const ChildrenSchema = new Schema({
         required: true,
     },
     lessons:{
-        type: [Schema.Types.ObjectId],
+        type: [String],
         default  :      [],
         ref: 'Lesson',
     }

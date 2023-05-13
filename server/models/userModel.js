@@ -19,21 +19,10 @@ const UserSchema = new Schema({
         required :      true,
         default  :      "user",
     },
-    children:{
-        type     :      [
-            new Schema({
-                name:{
-                    type: String,
-                    required: true,
-                },
-                lessons:{
-                    type: [String],
-                    default  :      [],
-                }
-            })
-        ],
-        default  :      []
-    }
+    children:[{
+        type     :      Schema.Types.ObjectId,
+        ref      :      "Children"
+    }]
     // isActivated: {
     //     type    :      Boolean,
     //     default :      false,

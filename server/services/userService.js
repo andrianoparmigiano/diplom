@@ -15,14 +15,15 @@ class UserService{
         }
         const hashPassword   = await bcrypt.hash(password + email, 3)
         // const activationLink = v4()
-        const user           = await userModel.create({email, password: hashPassword, fullName, children: children})
-        // const childs = []
-        // for(let el of children){
-        //     const child = await ChildrenModel.create(el)
-        //     childs.push(child)
-        // }
-        // user.children = childs
-        // await user.save()
+        const user           = (await userModel.create({email, password: hashPassword, fullName, children: []})).populate("children")
+        const childs = []
+        console.log(children);
+        for(let el of children){
+            const child = await ChildrenModel.create(el)
+            childs.push(child._id)
+        }
+        user.children = childs
+        await user.save()
         // await mailService.sendActivationMail(email, activationLink)
         const userDto = new UserDto(user)
         const refreshToken  = tokenService.generateToken({...userDto})
@@ -31,7 +32,7 @@ class UserService{
     }
 
     async login(email, password){
-        const condidate = await userModel.findOne({email})
+        const condidate = await userModel.findOne({email}).populate("children")
         if(!condidate){
             throw ErrorInServer.badRequest(`Неверные почта или пароль!`)
         }

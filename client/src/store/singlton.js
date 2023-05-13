@@ -43,6 +43,7 @@ export class Storage {
             [...this.data.user.children.filter((child) => child.lessons && child.lessons?.length !== 0).map((child) => ({
                 value: `${this.data.user._id}-${this.data.user.fullName}-${child._id}-${child.name}`,
                 title: child.name,
+                selectable: false,
                 children: child.lessons.filter((les) => les.length !== 0).map((les) => ({
                     value: `${this.data.user._id}-${this.data.user.fullName}-${child._id}-${child.name}-${les}`,
                     title: les,

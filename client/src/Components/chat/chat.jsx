@@ -22,13 +22,15 @@ const Chat = () => {
     const onChangeChild = (value) => {
         setRoom(value);
         console.log(value);
+        const user_id = room.split('-')[0]
         fetch(`http://localhost:8000/getmessages`, {
-            method: "GET",
+            method: "POST",
             credentials: 'include',
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json;charset=UTF-8",
             },
+            body: JSON.stringify({}),
         })
         .then((res) => res.json())
         .then((data) => {
@@ -46,7 +48,8 @@ const Chat = () => {
     return (storage.data.user === "unauth" || 
     <>{<TreeSelect  
         treeDefaultExpandAll
-        defaultValue="none"
+        value={room}
+        // defaultValue="none"
         className="selectchildrenlesson"
         onChange={onChangeChild}
         treeData={
