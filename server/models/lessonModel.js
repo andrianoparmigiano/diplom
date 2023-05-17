@@ -6,6 +6,11 @@ const LessonSchema = new Schema({
         required: true,
         unique   :      true,
     },
+    // children: [{
+    //     type     :      Schema.Types.ObjectId,
+    //     ref      :      "Children",
+    //     default  :   []
+    // }]
 })
 
 export default model('Lesson', LessonSchema)

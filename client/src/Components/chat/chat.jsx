@@ -1,147 +1,100 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Storage } from "../../store/singlton";
 import "./style.css";
 import { observer } from "mobx-react-lite";
-import { Button, Card, Cascader, Input, Select, Space, TreeSelect } from "antd";
+import { Button, Card, Input, Space, TreeSelect } from "antd";
 import { DeleteOutlined, SendOutlined } from "@ant-design/icons";
 import io from "socket.io-client"
 
-// const socket = io.connect("http://localhost:8000")
+const socket = io.connect("http://localhost:8000")
 
 const Chat = () => {
     const storage = new Storage();
 
     const [room, setRoom] = useState("none");
+    const [messageInput, setMessageInput] = useState("");
+
+    useEffect(() => {
+        // Обработка сообщений от сервера
+        socket.on('room', (data) => {
+            console.log(data);
+            storage.setData('room', data.room)
+            storage.setData('messages', data.messages)
+        });
+        socket.on('messages', (data) => {
+            console.log(data);
+            storage.setData('messages', data)
+        });
+    }, []);
 
     const sendmessage = () => {
-        // socket.emit()
+        if(messageInput === ''){
+            alert("Вы ничего не ввели!")
+            return
+        }
+        // socket.emit('message', {text: messageInput, room_id: storage.data.room._id, user_id: storage.data.user._id, name_room: room,});
+        socket.emit('message', {room, text: messageInput});
+        setMessageInput('');
     };
 
-    const deleteMessage = () => {};
-
-    const onChangeChild = (value) => {
-        setRoom(value);
-        console.log(value);
-        const user_id = room.split('-')[0]
-        fetch(`http://localhost:8000/getmessages`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
-            body: JSON.stringify({}),
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-            storage.setData('messages', data)
-        })
-        .catch((err) => console.log(err));
-        // socket.on('join', )
+    // const deleteMessage = (mes_id, room_id) => {
+    const deleteMessage = (mes_id, room) => {
+        // socket.emit('del_mes', {mes_id, room_id, name_room: room,});
+        socket.emit('del_mes', {mes_id, room});
     };
 
-    let a = new Date(Date.now());
-
-    console.log(storage.getRoomData);
-
+    const onChangeRoom = (room) => {
+        setRoom(() => room);
+        console.log(room);
+        if(room === "none") return
+        socket.emit('join', {
+            user_id: room.split('-')[0],
+            child_id: room.split('-')[2],
+            lesson: room.split('-')[4],
+            // name_room: room,
+            room: room,
+        });
+    };
+    console.log(storage.data?.messages);
     return (storage.data.user === "unauth" || 
     <>{<TreeSelect  
         treeDefaultExpandAll
         value={room}
         // defaultValue="none"
         className="selectchildrenlesson"
-        onChange={onChangeChild}
+        onChange={onChangeRoom}
         treeData={
             storage.getRoomData
         }
     />}
-        {room === "none" || <div className="chat">
-                {/*  <div className="mes"> */}
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
+        {room === "none" || <>{<div className="chat">
+            {
+                storage.data?.messages?.map(mes => 
+                    <Card key={`${mes._id}${storage.data.room._id}`} className="message">
+                        <div className="id">User - {storage.data.user.fullName}</div>
+                        {storage.data.user?.role === "user" && <div className="name">Ребенок - {room.split('-')[3]}</div>}
                         <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
+                            {mes.text}
                         </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
+                        <div className="time">{new Date(mes.createdAt).toLocaleString("ru")}</div>
+                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={() => deleteMessage(mes._id, room)}/>
                     </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">24359082736-</div>
-                        <div className="name">aaa</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                    <Card hoverable className="message">
-                        <div className="id">{room.split('-')[1]}</div>
-                        <div className="name">{room.split('-')[3]}</div>
-                        <div className="text">
-                            erghnlkj;sroflthinerghnlkj;sroflthinerghnlkj;sroflthin/erghnlkj;sroflthinderghnlkj;sroflthinierghnlkj;sroflthinv
-                        </div>
-                        <div className="time">{a.toLocaleString("ru")}</div>
-                        <Button type="primary" icon={<DeleteOutlined />} danger ghost onClick={deleteMessage}/>
-                    </Card>
-                </div>
-                }
-        {/* </div> */}
-        {room === "none" || <div className="inp_and_title">
+                )
+            }
+        </div>}
+        <div className="inp_and_title">
             <Space.Compact className="inp_space">
-                <Input />
+                <Input 
+                    value={messageInput}
+                    onChange={(e) => setMessageInput(e.target.value)}
+                    onPressEnter={sendmessage}
+                />
                 <Button type="primary" onClick={sendmessage}>
                     <SendOutlined />
                 </Button>
             </Space.Compact>
             <div className="lesson">{room.split('-')[4]}</div>
-        </div>}
+        </div></>}
     </>
     );
 };

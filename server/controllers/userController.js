@@ -41,8 +41,8 @@ class AuthController{
 
     async getusers(req, res, next){
         try {
-            let users = await userModel.find({role: "user"}).populate("children")
-            users = users.map((user) => new UserDto(user))
+            let users = await userModel.find({role: "user"}).populate({path: "children", populate: {path: "lessons"}});
+            users = users.map((user) => new UserDto({...user._doc, children: user.children.map(child => ({...child._doc, lessons: !child._doc.lessons ? [] : child._doc.lessons.map(les => les.name)}))}))
             res.json(users)
         } catch (err) {
             next(err);
@@ -59,55 +59,13 @@ class AuthController{
         }
     }
 
-    async setlessons(req, res, next){
-        try {
-            await lessonModel.deleteMany({})
-            let lessons = []
-            for(let lesson of req.body){
-                let el = await lessonModel.create({name: lesson})
-                lessons.push(el.name)
-            }
-            let children = await childrenModel.find({})
-            children = children.map((child) => ({...child, lessons: child.lessons.filter((les) => lessons.includes(les))}))
-            res.json(lessons)
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    async setchildsles(req, res, next){
-        try {
-            const child = await childrenModel.findById(req.body._id)
-            console.log(child);
-            child.lessons = req.body.lessons
-            await child.save()
-            console.log(req.body);
-            // const user = await userModel.findById(req.body.user_id)
-            // const child_index = user.children.findIndex(el => el._id.toString() === req.body._id)
-            // user.children = [...user.children.slice(0, child_index), {...user.children[child_index], lessons: req.body.lessons}, ...user.children.slice(child_index + 1)]
-            // await user.save()
-            // const userDto = new UserDto(user)
-            res.json(child)
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    async getlessons(req, res, next){
-        try {
-            const lessons = await lessonModel.find({});
-            res.json(lessons.map(el=>el.name))
-        } catch (err) {
-            next(err);
-        }
-    }
-
     async checkauth(req, res, next){
         try {
             const { refreshToken } = req.cookies;
             const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-            const condidate = await userModel.findOne({email: userData.email}).populate("children");
-            const userDto = new UserDto(condidate);
+            const condidate = await userModel.findOne({email: userData.email}).populate({path: "children", populate: {path: "lessons"}});
+            console.log({...condidate._doc})
+            const userDto = new UserDto({...condidate._doc, children: condidate.children.map(child => ({...child._doc, lessons: !child._doc.lessons ? [] : child._doc.lessons.map(les => les.name)}))});
             res.json(userDto);
         } catch (err) {
             next(err);

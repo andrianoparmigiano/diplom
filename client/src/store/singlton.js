@@ -24,7 +24,7 @@ export class Storage {
     }
 
     get getRoomData(){
-        return this.data.user?.role === 'admin' ? 
+        return this.data.user?.role === 'admin' ? !this.data.users ? [] : 
             [...this.data.users.filter((user) => user.children && user.children?.length !== 0).map((user) => ({
                 value: user._id,
                 title: user.fullName,

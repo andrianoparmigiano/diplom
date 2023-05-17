@@ -1,31 +1,28 @@
 import {Schema, model} from 'mongoose'
 
-const MessagesSchema = new Schema({
+const ChatRoomSchema = new Schema({
     user_id:{
-        type     :      [Schema.Types.ObjectId],
+        type     :      Schema.Types.ObjectId,
         ref      :      "User",
         required :      true,
-        unique   :      true,
     },
-    childname:{
-        type: String,
-        required: true,
+    child_id:{
+        type: Schema.Types.ObjectId,
+        ref      :      "Children",
+        required :      true,
     },
-    lessonname:{
-        type: String,
-        required: true,
+    lesson_id:{
+        type: Schema.Types.ObjectId,
+        ref      :      "Lesson",
+        required :      true,
     },
-    text:{
-        type: String,
-        required: true,
-        default: '',
-    },
-    time: { 
-        type: Number,
-        required: true,
-        default: Date.now(),
-    }
+    // messages:[{
+    //     type: Schema.Types.ObjectId,
+    //     ref      :      "Messages",
+    //     required: true,
+    //     default: [],
+    // }],
 })
 
 
-export default model('Messages', MessagesSchema)
+export default model('ChatRoom', ChatRoomSchema)

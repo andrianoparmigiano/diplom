@@ -13,11 +13,11 @@ import Schedule from "./Components/schedule/Schedule";
 
 function App() {
     const storage = new Storage();
+    const navigate = useNavigate();
     useEffect(() => {
         storage.setData("location", window.location.pathname);
         storage.setData("user", "unauth");
-        storage.setData("users", []);
-
+        
         // проверить авторизацию и получить данные о пользователе
         fetch(`http://localhost:8000/checkauth`, {
             method: "GET",
@@ -30,6 +30,10 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
+            if (data.message === "Непредвиденная ошибка") {
+                navigate("/");
+                return;
+            }
             if (data.message === "Пользователь не авторизован!") {
                 storage.setData("user", "unauth");
                 return;

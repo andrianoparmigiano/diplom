@@ -5,10 +5,15 @@ const ChildrenSchema = new Schema({
         type: String,
         required: true,
     },
-    lessons:{
-        type: [String],
+    lessons:[{
+        type     :      Schema.Types.ObjectId,
         default  :      [],
         ref: 'Lesson',
+    }],
+    parent:{
+        type     :      Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     }
 })
 

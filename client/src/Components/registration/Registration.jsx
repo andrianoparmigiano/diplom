@@ -18,7 +18,7 @@ const Registration = () => {
     const storage = new Storage();
     const navigate = useNavigate();
     const onFinish = async (values) => {
-        const data = {...values, children: values.children.map(el=>({name: el}))}
+        const data = {...values, children: values.children?.map(el=>({name: el})) || []}
         console.log(data)
         fetch(`http://localhost:8000${window.location.pathname}`, {
             method: "POST",

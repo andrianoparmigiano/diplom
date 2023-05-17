@@ -15,24 +15,25 @@ class UserService{
         }
         const hashPassword   = await bcrypt.hash(password + email, 3)
         // const activationLink = v4()
-        const user           = (await userModel.create({email, password: hashPassword, fullName, children: []})).populate("children")
+        const user           = await userModel.create({email, password: hashPassword, fullName, children: []})
         const childs = []
-        console.log(children);
         for(let el of children){
-            const child = await ChildrenModel.create(el)
+            const child = await ChildrenModel.create({...el, parent: user._id})
             childs.push(child._id)
         }
         user.children = childs
         await user.save()
+        const fullUser = await userModel.findById(user._id).populate({path: "children", populate: {path: "lessons"}});
         // await mailService.sendActivationMail(email, activationLink)
-        const userDto = new UserDto(user)
+        const userDto = new UserDto({...fullUser._doc, children: fullUser.children.map(child => ({...child._doc, lessons: !child._doc.lessons ? [] : child._doc.lessons.map(les => les.name)}))})
+        console.log(userDto);
         const refreshToken  = tokenService.generateToken({...userDto})
         await tokenService.saveToken(userDto.id, refreshToken)
         return { refreshToken, user: userDto }
     }
 
     async login(email, password){
-        const condidate = await userModel.findOne({email}).populate("children")
+        const condidate = await userModel.findOne({email}).populate({path: "children", populate: {path: "lessons"}});
         if(!condidate){
             throw ErrorInServer.badRequest(`Неверные почта или пароль!`)
         }
@@ -41,7 +42,7 @@ class UserService{
         if(!verification){
             throw ErrorInServer.badRequest(`Неверные почта или пароль!`)
         }
-        const userDto = new UserDto(condidate)
+        const userDto = new UserDto({...condidate._doc, children: condidate.children.map(child => ({...child._doc, lessons: !child._doc.lessons ? [] : child._doc.lessons.map(les => les.name)}))})
         const refreshToken  = tokenService.generateToken({...userDto})
         await tokenService.saveToken(userDto.id, refreshToken)
         return { refreshToken, user: userDto }

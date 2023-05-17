@@ -47,7 +47,7 @@ const Home = () => {
                 Accept: "application/json",
                 "Content-Type": "application/json;charset=UTF-8",
             },
-            body: JSON.stringify({...storage.data.user.children[i], user_id: storage.data.user.id}),
+            body: JSON.stringify(storage.data.user.children[i]),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -57,6 +57,11 @@ const Home = () => {
     };
 
     const setlessons = () => {
+        console.log(storage.data.lessons)
+        if(storage.data.lessons.some(les => les === '')) {
+            alert("Вы ничего не ввели!")
+            return
+        }
         if (
             new Set(storage.data.lessons).size !== storage.data.lessons.length
         ) {
