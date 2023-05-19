@@ -40,8 +40,24 @@ function App() {
             }
             storage.setData("user", data);
 
-            // получить всех пользователей для редактирования
             if(storage.data.user?.role === "admin"){
+                fetch(`http://localhost:8000/getlessons`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log("lessons",data);
+                        if (storage.data.user !== "unauth")
+                            storage.setData("lessons", data);
+                    })
+                    .catch((err) => console.log(err));
+                
+                // получить всех пользователей для редактирования
                 fetch(`http://localhost:8000/getusers`, {
                     method: "GET",
                     credentials: "include",

@@ -6,11 +6,11 @@ const MessagesSchema = new Schema({
     //     ref      :      "ChatRoom",
     //     required :      true,
     // },
-    // user_id:{
-    //     type     :      Schema.Types.ObjectId,
-    //     ref      :      "User",
-    //     required :      true,
-    // },
+    user_id:{
+        type     :      Schema.Types.ObjectId,
+        ref      :      "User",
+        required :      true,
+    },
     room: {
         type: String,
         required: true,

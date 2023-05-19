@@ -33,7 +33,7 @@ const Chat = () => {
             return
         }
         // socket.emit('message', {text: messageInput, room_id: storage.data.room._id, user_id: storage.data.user._id, name_room: room,});
-        socket.emit('message', {room, text: messageInput});
+        socket.emit('message', {user_id: storage.data.user._id, room, text: messageInput});
         setMessageInput('');
     };
 
@@ -55,23 +55,23 @@ const Chat = () => {
             room: room,
         });
     };
-    console.log(storage.data?.messages);
+    
     return (storage.data.user === "unauth" || 
     <>{<TreeSelect  
-        treeDefaultExpandAll
-        value={room}
-        // defaultValue="none"
-        className="selectchildrenlesson"
-        onChange={onChangeRoom}
-        treeData={
-            storage.getRoomData
-        }
-    />}
+            treeDefaultExpandAll
+            value={room}
+            // defaultValue="none"
+            className="selectchildrenlesson"
+            onChange={onChangeRoom}
+            treeData={
+                storage.getRoomData
+            }
+        />}
         {room === "none" || <>{<div className="chat">
             {
                 storage.data?.messages?.map(mes => 
-                    <Card key={`${mes._id}${storage.data.room._id}`} className="message">
-                        <div className="id">User - {storage.data.user.fullName}</div>
+                    <Card key={`${mes._id}${storage.data.room._id}`} hoverable className="message">
+                        <div className="id">User - {mes.user_id.fullName}</div>
                         {storage.data.user?.role === "user" && <div className="name">Ребенок - {room.split('-')[3]}</div>}
                         <div className="text">
                             {mes.text}

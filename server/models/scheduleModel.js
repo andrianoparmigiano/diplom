@@ -1,15 +1,15 @@
 import {Schema, model} from 'mongoose'
 
 const ScheduleSchema = new Schema({
-    week:{
+    date:{
         type: String,
         unique   :      true,
         required: true,
-        default: `${dayjs().year()}-${dayjs().week()}`,
     },
-    "ПН":{
-           
-    },
+    info_lessons:[{
+        type     :      Schema.Types.ObjectId,
+        ref      :      "InfoLesson"
+    }],
 })
 
 export default model('Schedule', ScheduleSchema)

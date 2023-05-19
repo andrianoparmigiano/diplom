@@ -2,3 +2,68 @@
     max-height: 550px;
     overflow: auto;
 }
+
+.edit-schedule{
+    overflow: auto;
+    flex-grow:1;
+    max-height: 460px;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: stretch;
+    background-color: #f0f8ff;
+    padding: 10px;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.les-info > div{
+    width: 100%;
+}
+
+.les-info{
+    width: calc(100% - 12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 5px;
+    border: 1px solid rgb(0, 255, 234); 
+    background: #eefff8;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.save-schedule, .date{
+    width: 100%;
+}
+
+.ant-btn-default:disabled{
+    border-color: #ff0000;
+    color: rgb(255 0 0);
+}
+
+.les-info-names{
+    align-items: flex-end !important;
+    width: 100% !important;
+}
+
+.del{
+    /* margin-bottom: 10px; */
+}
+
+.dnevnik{
+    min-height: fit-content;
+    max-height: 200px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.child-panel{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}

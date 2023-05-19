@@ -57,18 +57,18 @@ io.on("connection", (socket) => {
         const lesson_id = await lessonModel.findOne({name: lesson})
         const chatroom = await chatroomModel.findOne({user_id, child_id, lesson_id: lesson_id._id})
         if(chatroom) {
-            const messages = await messagesModel.find({room}).sort({createdAt: -1})
+            const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
             socket.emit('room', {room: chatroom, messages})
             return
         }
         const new_room = await chatroomModel.create({user_id, child_id, lesson_id: lesson_id._id})
-        const messages = await messagesModel.find({room}).sort({createdAt: -1})
+        const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
         console.log(111, messages);
         io.to(`${room}`).emit('room', {room: new_room, messages});
     })
 
     // socket.on('message', async ({text, room_id, user_id, name_room}) => {
-    socket.on('message', async ({text, room}) => {
+    socket.on('message', async ({user_id, text, room}) => {
         console.log("СРАБАТЫВАЕТ ЕБАНЫЙ МЭСЭДЖ!!!");
         // const message = await messagesModel.create({text, room_id, user_id})
         // const room = await chatroomModel.findById(room_id)
@@ -78,8 +78,8 @@ io.on("connection", (socket) => {
         // fullroom.messages = fullroom.messages.sort((a, b) => new Date(b.time) - new Date(a.time))
         // io.to(`${name_room}`).emit('room', fullroom);
 
-        await messagesModel.create({text, room})
-        const messages = await messagesModel.find({room}).sort({createdAt: -1})
+        await messagesModel.create({user_id, text, room})
+        const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
         console.log(111,messages);
         io.to(`${room}`).emit('messages', messages);
     })
@@ -97,7 +97,7 @@ io.on("connection", (socket) => {
         // io.to(`${name_room}`).emit('room', fullroom);
 
         await messagesModel.deleteOne({_id: mes_id})
-        const messages = await messagesModel.find({room}).sort({createdAt: -1})
+        const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
         io.to(`${room}`).emit('messages', messages);
     })
 

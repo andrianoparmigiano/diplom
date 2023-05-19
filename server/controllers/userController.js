@@ -49,11 +49,11 @@ class AuthController{
         }
     }
 
-    async getmessages(req, res, next){
+    async getchildren(req, res, next){
         try {
-            let users = await userModel.find({role: "user"}).populate("children")
-            users = users.map((user) => new UserDto(user))
-            res.json(users)
+            let children = await childrenModel.find({}).populate("lessons")
+            children = children.map(ch => ({...ch._doc, lessons: ch._doc.lessons.map(les => les.name)}))
+            res.json(children)
         } catch (err) {
             next(err);
         }
