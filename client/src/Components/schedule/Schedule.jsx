@@ -42,7 +42,7 @@ const Schedule = () => {
     return (
         <>
             <DatePicker className="date" onChange={onChangeDate} format={'DD.MM.YYYY'} value={storage.data.date ? dayjs(storage.data.date, 'DD.MM.YYYY') : null}/>
-            <TreeSelect  
+            {/* <TreeSelect  
                 treeDefaultExpandAll
                 value={schedule}
                 // defaultValue="none"
@@ -51,7 +51,7 @@ const Schedule = () => {
                 treeData={
                     storage.getRoomData
                 }
-            />
+            /> */}
         </>
     );
 };

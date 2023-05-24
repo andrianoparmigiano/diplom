@@ -3,27 +3,20 @@ import {
     Checkbox,
     Collapse,
     DatePicker,
-    Form,
-    Input,
-    Modal,
     Radio,
     Rate,
     Space,
-    Tabs,
     TimePicker,
-    Tooltip,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import { DeleteOutlined, MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import EditDay from "../edit-day/EditDay";
+import { DeleteOutlined } from "@ant-design/icons";
 import { Storage } from "../../store/singlton";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { observer } from "mobx-react";
 import TextArea from "antd/es/input/TextArea";
 
 const { Panel } = Collapse;
-const { RangePicker } = DatePicker;
 
 const EditSchedule = () => {
     const storage = new Storage();

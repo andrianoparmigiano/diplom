@@ -32,14 +32,11 @@ const Chat = () => {
             alert("Вы ничего не ввели!")
             return
         }
-        // socket.emit('message', {text: messageInput, room_id: storage.data.room._id, user_id: storage.data.user._id, name_room: room,});
         socket.emit('message', {user_id: storage.data.user._id, room, text: messageInput});
         setMessageInput('');
     };
 
-    // const deleteMessage = (mes_id, room_id) => {
     const deleteMessage = (mes_id, room) => {
-        // socket.emit('del_mes', {mes_id, room_id, name_room: room,});
         socket.emit('del_mes', {mes_id, room});
     };
 
@@ -51,7 +48,6 @@ const Chat = () => {
             user_id: room.split('-')[0],
             child_id: room.split('-')[2],
             lesson: room.split('-')[4],
-            // name_room: room,
             room: room,
         });
     };
@@ -60,7 +56,6 @@ const Chat = () => {
     <>{<TreeSelect  
             treeDefaultExpandAll
             value={room}
-            // defaultValue="none"
             className="selectchildrenlesson"
             onChange={onChangeRoom}
             treeData={

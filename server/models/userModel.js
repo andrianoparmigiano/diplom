@@ -23,11 +23,6 @@ const UserSchema = new Schema({
         type     :      Schema.Types.ObjectId,
         ref      :      "Children"
     }]
-    // isActivated: {
-    //     type    :      Boolean,
-    //     default :      false,
-    // },
-    // activationLink :      { type: String },
 });
 
 export default model("User", UserSchema);

@@ -1,7 +1,5 @@
 import userModel from "../models/userModel.js"
 import bcrypt from 'bcrypt'
-import { v4 } from "uuid"
-import mailService from "./mailService.js"
 import tokenService from "./tokenService.js"
 import UserDto from "../dtos/userDto.js"
 import ErrorInServer from "../exceptions/error.js"
@@ -14,7 +12,6 @@ class UserService{
             throw ErrorInServer.badRequest(`Пользователь с почтовым адресом ${email} уже существует!`)
         }
         const hashPassword   = await bcrypt.hash(password + email, 3)
-        // const activationLink = v4()
         const user           = await userModel.create({email, password: hashPassword, fullName, children: []})
         const childs = []
         for(let el of children){
@@ -24,7 +21,6 @@ class UserService{
         user.children = childs
         await user.save()
         const fullUser = await userModel.findById(user._id).populate({path: "children", populate: {path: "lessons"}});
-        // await mailService.sendActivationMail(email, activationLink)
         const userDto = new UserDto({...fullUser._doc, children: fullUser.children.map(child => ({...child._doc, lessons: !child._doc.lessons ? [] : child._doc.lessons.map(les => les.name)}))})
         console.log(userDto);
         const refreshToken  = tokenService.generateToken({...userDto})

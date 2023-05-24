@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from 'mongoose'
 import env from 'dotenv'
-import authRouter from './routes/authRouter.js'
+import Router from './routes/Router.js'
 import errorMiddleware from './middleware/error-middleware.js'
 import http from "http"
 import { Server } from "socket.io";
@@ -22,7 +22,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL
 }))
-app.use('/', authRouter)
+app.use('/', Router)
 app.use(errorMiddleware)
 
 const server = http.createServer(app);
@@ -37,21 +37,6 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     // socket.on('join', async ({user_id, child_id, lesson, name_room}) => {
     socket.on('join', async ({user_id, child_id, lesson, room}) => {
-        console.log("СРАБАТЫВАЕТ ЕБАНЫЙ ДЖОИН!!!");
-        // socket.join(`${name_room}`);
-        // const lesson_id = await lessonModel.findOne({name: lesson})
-        // const room = await chatroomModel.findOne({user_id, child_id, lesson_id: lesson_id._id})
-        // console.log(room);
-        // if(room) {
-        //     room.messages = room.messages.sort((a, b) => new Date(b.time) - new Date(a.time))
-        //     socket.emit('room', room)
-        //     return
-        // }
-        // const new_room = await chatroomModel.create({user_id, child_id, lesson_id: lesson_id._id})
-        // const fullroom = await chatroomModel.findById(new_room._id).populate('messages')
-        // fullroom.messages = fullroom.messages.sort((a, b) => new Date(b.time) - new Date(a.time))
-        // console.log(fullroom);
-        // io.to(`${name_room}`).emit('room', fullroom);
 
         socket.join(`${room}`);
         const lesson_id = await lessonModel.findOne({name: lesson})
@@ -69,14 +54,6 @@ io.on("connection", (socket) => {
 
     // socket.on('message', async ({text, room_id, user_id, name_room}) => {
     socket.on('message', async ({user_id, text, room}) => {
-        console.log("СРАБАТЫВАЕТ ЕБАНЫЙ МЭСЭДЖ!!!");
-        // const message = await messagesModel.create({text, room_id, user_id})
-        // const room = await chatroomModel.findById(room_id)
-        // room.messages = [...room.messages, message._id]
-        // await room.save()
-        // const fullroom = await chatroomModel.findById(room_id).populate('messages')
-        // fullroom.messages = fullroom.messages.sort((a, b) => new Date(b.time) - new Date(a.time))
-        // io.to(`${name_room}`).emit('room', fullroom);
 
         await messagesModel.create({user_id, text, room})
         const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
@@ -86,15 +63,6 @@ io.on("connection", (socket) => {
 
     // socket.on("del_mes", async ({mes_id, room_id, name_room}) => {
     socket.on("del_mes", async ({mes_id, room}) => {
-        // const room = await chatroomModel.findById(room_id)
-        // const index_mes = room.messages.findIndex(id => id === mes_id)
-        // room.messages = [...room.messages.slice(0, index_mes), ...room.messages.slice(index_mes + 1)]
-        // await room.save()
-        console.log("СРАБАТЫВАЕТ ЕБАНЫЙ ДЕЛЕТ!!!");
-        // await messagesModel.deleteOne({_id: mes_id})
-        // const fullroom = await chatroomModel.findById(room_id).populate('messages')
-        // fullroom.messages = fullroom.messages.sort((a, b) => new Date(b.time) - new Date(a.time))
-        // io.to(`${name_room}`).emit('room', fullroom);
 
         await messagesModel.deleteOne({_id: mes_id})
         const messages = await messagesModel.find({room}).sort({createdAt: -1}).populate("user_id", "fullName")
